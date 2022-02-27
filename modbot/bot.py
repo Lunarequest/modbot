@@ -1,24 +1,18 @@
 import hikari
-import tanjun
+import lightbulb
 import os
 
 
-def build_bot() -> hikari.GatewayBot:
+def build_bot() -> lightbulb.BotApp:
     TOKEN = os.environ.get("BOT_TOKEN")
-    bot = hikari.GatewayBot(TOKEN)
+    bot = lightbulb.BotApp(
+        TOKEN,
+        prefix="!",
+        banner=None,
+        intents=hikari.Intents.ALL,
+        default_enabled_guilds=(752062040075534397,)
+    )
 
-    make_client(bot)
+    bot.load_extensions_from("./modbot/extensions/", must_exist=True)
 
     return bot
-
-
-def make_client(bot: hikari.GatewayBot) -> tanjun.Client:
-    client = (
-        tanjun.Client.from_gateway_bot(
-                bot,
-                mention_prefix=True,
-                set_global_commands=True,
-            )
-    ).add_prefix("!")
-
-    return client
