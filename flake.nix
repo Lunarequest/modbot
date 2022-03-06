@@ -24,7 +24,7 @@
       in rec {
         packages.modbot = pkgs.poetry2nix.mkPoetryApplication {
           projectDir  = ./.;
-          python = pkgs.python310;
+          python = pkgs.python39;
         };
         defaultPackage = packages.modbot;
       }

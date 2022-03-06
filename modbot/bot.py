@@ -10,7 +10,7 @@ def build_bot() -> lightbulb.BotApp:
         prefix="!",
         banner=None,
         intents=hikari.Intents.ALL,
-        default_enabled_guilds=(752062040075534397,)
+        default_enabled_guilds=(752062040075534397,),
     )
 
     bot.load_extensions_from("./modbot/extensions/", must_exist=True)

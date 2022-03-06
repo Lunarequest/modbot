@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 import hikari
 import lightbulb
 
@@ -6,20 +7,14 @@ mod_plugin = lightbulb.Plugin("mod")
 
 
 @mod_plugin.command
-@lightbulb.add_checks(
-    lightbulb.has_roles(774478728318681118, mode=any)
-)
+@lightbulb.add_checks(lightbulb.has_roles(774478728318681118, mode=any))
 @lightbulb.option(
     "target", "the member to get user info about.", hikari.User, required=False
 )
-@lightbulb.command(
-        "userinfo", "get information on a server member."
-)
+@lightbulb.command("userinfo", "get information on a server member.")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def userinfo(ctx: lightbulb.Context) -> None:
-    target: hikari.User = ctx.get_guild().get_member(
-            ctx.options.target or ctx.user
-    )
+    target: hikari.User = ctx.get_guild().get_member(ctx.options.target or ctx.user)
 
     if not target:
         await ctx.respond("the requested user is not in the server")
@@ -65,6 +60,25 @@ async def userinfo(ctx: lightbulb.Context) -> None:
     )
 
     await ctx.respond(embed)
+
+
+@mod_plugin.command
+@lightbulb.add_checks(lightbulb.has_roles(774478728318681118, mode=any))
+@lightbulb.option("target", "the member to ban.", hikari.Member, required=True)
+@lightbulb.option("reason", "reason why user is banned", required=False)
+@lightbulb.command("ban", "ban the user from a server.")
+@lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
+async def ban(ctx: lightbulb.Context) -> None:
+    target: hikari.Member = ctx.options.target
+    reason: str = ctx.options.reason
+    try:
+        await target.ban(reason=reason)
+        await ctx.respond(f"user: {target.username} has been banned")
+    except Exception as e:
+        await ctx.respond(f"an error occured while trying to ban the user:")
+        print(e)
+    finally:
+        return
 
 
 def load(bot: lightbulb.BotApp) -> None:
