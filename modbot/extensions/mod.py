@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional, TYPE_CHECKING
 import hikari
 import lightbulb
 
@@ -13,7 +14,17 @@ mod_plugin = lightbulb.Plugin("mod")
 @lightbulb.command("userinfo", "get information on a server member.")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def userinfo(ctx: lightbulb.Context) -> None:
-    target: hikari.User = ctx.get_guild().get_member(ctx.options.target or ctx.user)
+    guild = ctx.get_guild()
+    if guild:
+        if ctx.options.target:
+            if TYPE_CHECKING:
+                target: Optional[hikari.Member] = guild.get_member(
+                    ctx.options.target
+                )
+            else:
+                target: Optional[hikari.Member] = guild.get_member(
+                    ctx.user or ctx.options.target
+                )
 
     if not target:
         await ctx.respond("the requested user is not in the server")
@@ -23,42 +34,42 @@ async def userinfo(ctx: lightbulb.Context) -> None:
     joined_at: int = int(target.joined_at.timestamp())
 
     roles = (await target.fetch_roles())[1:]  # All but @everyone
-
-    embed = (
-        hikari.Embed(
-            title=f"User Info - {target.display_name}",
-            description=f"ID: `{target.id}`",
-            colour=0x3B9DFF,
-            timestamp=datetime.now().astimezone(),
+    if target and ctx.member:
+        embed = (
+            hikari.Embed(
+                title=f"User Info - {target.display_name}",
+                description=f"ID: `{target.id}`",
+                colour=0x3B9DFF,
+                timestamp=datetime.now().astimezone(),
+            )
+            .set_footer(
+                text=f"Requested by {ctx.member.display_name}",
+                icon=ctx.member.avatar_url or ctx.member.default_avatar_url,
+            )
+            .set_thumbnail(target.avatar_url or target.default_avatar_url)
+            .add_field(
+                "Bot?",
+                str(target.is_bot),
+                inline=True,
+            )
+            .add_field(
+                "Created account on",
+                f"<t:{created_at}:d>\n(<t:{created_at}:R>)",
+                inline=True,
+            )
+            .add_field(
+                "Joined server on",
+                f"<t:{joined_at}:d>\n(<t:{joined_at}:R>)",
+                inline=True,
+            )
+            .add_field(
+                "Roles",
+                ", ".join(r.mention for r in roles),
+                inline=False,
+            )
         )
-        .set_footer(
-            text=f"Requested by {ctx.member.display_name}",
-            icon=ctx.member.avatar_url or ctx.member.default_avatar_url,
-        )
-        .set_thumbnail(target.avatar_url or target.default_avatar_url)
-        .add_field(
-            "Bot?",
-            str(target.is_bot),
-            inline=True,
-        )
-        .add_field(
-            "Created account on",
-            f"<t:{created_at}:d>\n(<t:{created_at}:R>)",
-            inline=True,
-        )
-        .add_field(
-            "Joined server on",
-            f"<t:{joined_at}:d>\n(<t:{joined_at}:R>)",
-            inline=True,
-        )
-        .add_field(
-            "Roles",
-            ", ".join(r.mention for r in roles),
-            inline=False,
-        )
-    )
-
-    await ctx.respond(embed)
+        await ctx.respond(embed)
+    return
 
 
 @mod_plugin.command
@@ -74,7 +85,7 @@ async def ban(ctx: lightbulb.Context) -> None:
         await target.ban(reason=reason)
         await ctx.respond(f"user: {target.username} has been banned")
     except Exception as e:
-        await ctx.respond(f"an error occured while trying to ban the user:")
+        await ctx.respond("an error occured while trying to ban the user")
         print(e)
     finally:
         return
