@@ -6,6 +6,9 @@ import os
 
 def build_bot() -> lightbulb.BotApp:
     TOKEN = os.environ.get("BOT_TOKEN")
+    if not os.environ.get("ANNOCEMENT_CHANNEL"):
+        print("missing required env token ANNOCEMENT_CHANNEL")
+        sys.exit(1)
     if TOKEN:
         bot = lightbulb.BotApp(
             TOKEN,

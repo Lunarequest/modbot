@@ -255,21 +255,21 @@ speedups = ["aiodns (>=3.0,<4.0)", "cchardet (>=2.1,<3.0)", "Brotli (>=1.0,<2.0)
 
 [[package]]
 name = "hikari-lightbulb"
-version = "2.2.0"
+version = "2.2.1"
 description = "A simple to use command handler for Hikari"
 category = "main"
 optional = false
 python-versions = ">=3.8.0,<3.11"
 
 [package.dependencies]
-hikari = ">=2.0.0.dev106,<2.1.0"
+hikari = ">=2.0.0.dev107,<2.1.0"
 
 [package.extras]
-crontrigger = ["croniter (>=1.2.0,<1.3.0)", "types-croniter (>=1.0.7,<1.1.0)"]
+crontrigger = ["croniter (>=1.3.4,<1.4.0)", "types-croniter (>=1.0.8,<1.1.0)"]
 
 [[package]]
 name = "identify"
-version = "2.4.11"
+version = "2.4.12"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -542,15 +542,15 @@ test = ["pylint", "pycodestyle", "pyflakes", "pytest", "pytest-cov", "coverage"]
 
 [[package]]
 name = "python-lsp-server"
-version = "1.3.3"
+version = "1.4.0"
 description = "Python Language Server for the Language Server Protocol"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 jedi = ">=0.17.2,<0.19.0"
-pluggy = "*"
+pluggy = ">=1.0.0"
 python-lsp-jsonrpc = ">=1.0.0"
 ujson = ">=3.0.0"
 
@@ -646,7 +646,7 @@ test = ["aiohttp", "flake8 (>=3.9.2,<3.10.0)", "psutil", "pycodestyle (>=2.7.0,<
 
 [[package]]
 name = "virtualenv"
-version = "20.13.2"
+version = "20.13.4"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -1051,12 +1051,12 @@ hikari = [
     {file = "hikari-2.0.0.dev107.tar.gz", hash = "sha256:dc5676be8b010c64afed1313c6ace2077ccb2bd559ee3b8def1fd97bf551f4dd"},
 ]
 hikari-lightbulb = [
-    {file = "hikari-lightbulb-2.2.0.tar.gz", hash = "sha256:0538a503fd415c88aab6dfbcb0463f1e22c35ed6bcaaa3f58ecbbfafa5e02a1d"},
-    {file = "hikari_lightbulb-2.2.0-py3-none-any.whl", hash = "sha256:38b272006155a8ae8605b813225a3a5f033da509f9a5329e2d5521acdd414e22"},
+    {file = "hikari-lightbulb-2.2.1.tar.gz", hash = "sha256:77c543dfec286b21ce4382bb5ede7a3106bbcab5ae43f41a1dc921b5e2e7e3af"},
+    {file = "hikari_lightbulb-2.2.1-py3-none-any.whl", hash = "sha256:2fafc1486e3bb187f7bd2c8f5fc1b7fee29ca29addcaab638ebc981cbff576a0"},
 ]
 identify = [
-    {file = "identify-2.4.11-py2.py3-none-any.whl", hash = "sha256:fd906823ed1db23c7a48f9b176a1d71cb8abede1e21ebe614bac7bdd688d9213"},
-    {file = "identify-2.4.11.tar.gz", hash = "sha256:2986942d3974c8f2e5019a190523b0b0e2a07cb8e89bf236727fb4b26f27f8fd"},
+    {file = "identify-2.4.12-py2.py3-none-any.whl", hash = "sha256:5f06b14366bd1facb88b00540a1de05b69b310cbc2654db3c7e07fa3a4339323"},
+    {file = "identify-2.4.12.tar.gz", hash = "sha256:3f3244a559290e7d3deb9e9adc7b33594c1bc85a9dd82e0f1be519bf12a1ec17"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -1259,8 +1259,8 @@ python-lsp-jsonrpc = [
     {file = "python_lsp_jsonrpc-1.0.0-py3-none-any.whl", hash = "sha256:079b143be64b0a378bdb21dff5e28a8c1393fe7e8a654ef068322d754e545fc7"},
 ]
 python-lsp-server = [
-    {file = "python-lsp-server-1.3.3.tar.gz", hash = "sha256:1b48ccd8b70103522e8a8b9cb9ae1be2b27a5db0dfd661e7e44e6253ebefdc40"},
-    {file = "python_lsp_server-1.3.3-py3-none-any.whl", hash = "sha256:ea7b1e623591ccbfbbf8e5dfe0df8119f27863125a58bdcacbacd1937d8e8cb3"},
+    {file = "python-lsp-server-1.4.0.tar.gz", hash = "sha256:769142c07573f6b66e930cbd7c588b826082550bef6267bb0aec63e7b6260009"},
+    {file = "python_lsp_server-1.4.0-py3-none-any.whl", hash = "sha256:3160c97c6d1edd8456f262fc0e4aad6b322c0cfd1b58d322a41679e57787594d"},
 ]
 pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
@@ -1388,8 +1388,8 @@ uvloop = [
     {file = "uvloop-0.16.0.tar.gz", hash = "sha256:f74bc20c7b67d1c27c72601c78cf95be99d5c2cdd4514502b4f3eb0933ff1228"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.13.2-py2.py3-none-any.whl", hash = "sha256:e7b34c9474e6476ee208c43a4d9ac1510b041c68347eabfe9a9ea0c86aa0a46b"},
-    {file = "virtualenv-20.13.2.tar.gz", hash = "sha256:01f5f80744d24a3743ce61858123488e91cb2dd1d3bdf92adaf1bba39ffdedf0"},
+    {file = "virtualenv-20.13.4-py2.py3-none-any.whl", hash = "sha256:c3e01300fb8495bc00ed70741f5271fc95fed067eb7106297be73d30879af60c"},
+    {file = "virtualenv-20.13.4.tar.gz", hash = "sha256:ce8901d3bbf3b90393498187f2d56797a8a452fb2d0d7efc6fd837554d6f679c"},
 ]
 yarl = [
     {file = "yarl-1.7.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f2a8508f7350512434e41065684076f640ecce176d262a7d54f0da41d99c5a95"},
