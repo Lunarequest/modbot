@@ -7,40 +7,6 @@ import lightbulb
 mod_plugin = lightbulb.Plugin("mod")
 
 
-@mod_plugin.listener(hikari.MemberChunkEvent)
-async def member_join(event):
-    target = event.member
-    created_at: int = int(target.created_at.timestamp())
-    joined_at: int = int(target.joined_at.timestamp())
-    embed = (
-        hikari.Embed(
-            title=f"User Info - {target.display_name}",
-            description=f"ID: `{target.id}`",
-            colour=0x3B9DFF,
-            timestamp=datetime.now().astimezone(),
-        )
-        .set_thumbnail(target.avatar_url or target.default_avatar_url)
-        .add_field(
-            "Bot?",
-            str(target.is_bot),
-            inline=True,
-        )
-        .add_field(
-            "Created account on",
-            f"<t:{created_at}:d>\n(<t:{created_at}:R>)",
-            inline=True,
-        )
-        .add_field(
-            "Joined server on",
-            f"<t:{joined_at}:d>\n(<t:{joined_at}:R>)",
-            inline=True,
-        )
-    )
-    mod_plugin.bot.rest.create_message(
-        content=embed, channel=int(os.environ.get("ANNOCEMENT_CHANNEL"))
-    )
-
-
 @mod_plugin.command
 @lightbulb.add_checks(lightbulb.has_roles(774478728318681118, mode=any))
 @lightbulb.option(
@@ -115,10 +81,15 @@ async def userinfo(ctx: lightbulb.Context) -> None:
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def ban(ctx: lightbulb.Context) -> None:
     target: hikari.Member = ctx.options.target
-    reason: str = ctx.options.reason
+    reason = ""
+    match ctx.options.reasons:
+        case None:
+            pass
+        case _:
+            reason = ctx.options.reasons
     try:
         await target.ban(reason=reason)
-        await ctx.respond(f"user: {target.username} has been banned")
+        await ctx.respond(f"user: {target.display_name} has been banned")
     except Exception as e:
         await ctx.respond("an error occured while trying to ban the user")
         print(e)
@@ -133,16 +104,56 @@ async def ban(ctx: lightbulb.Context) -> None:
 @lightbulb.command("kick", "kick the user from a server.")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def kick(ctx: lightbulb.Context) -> None:
-    target: hikari.Member = ctx.option.target
-    reason: str = ctx.options.reason
+    target: hikari.Member = ctx.options.target
+    reason = ""
+    match ctx.options.reasons:
+        case None:
+            pass
+        case _:
+            reason = ctx.options.reasons
     try:
         await target.kick(reason=reason)
-        await ctx.respond(f"user: {target.username} has been kicked")
+        await ctx.respond(f"user: {target.display_name} has been kicked")
     except Exception as e:
         await ctx.respond("an error occured while trying to kick the user")
         print(e)
     finally:
         return
+
+
+@mod_plugin.listener(hikari.MemberCreateEvent)
+async def member_join(event):
+    target = event.member
+    print(f"{target.display_name}")
+    created_at: int = int(target.created_at.timestamp())
+    joined_at: int = int(target.joined_at.timestamp())
+    embed = (
+        hikari.Embed(
+            title=f"User Info - {target.display_name}",
+            description=f"ID: `{target.id}`",
+            colour=0x3B9DFF,
+            timestamp=datetime.now().astimezone(),
+        )
+        .set_thumbnail(target.avatar_url or target.default_avatar_url)
+        .add_field(
+            "Bot?",
+            str(target.is_bot),
+            inline=True,
+        )
+        .add_field(
+            "Created account on",
+            f"<t:{created_at}:d>\n(<t:{created_at}:R>)",
+            inline=True,
+        )
+        .add_field(
+            "Joined server on",
+            f"<t:{joined_at}:d>\n(<t:{joined_at}:R>)",
+            inline=True,
+        )
+    )
+    await mod_plugin.bot.rest.create_message(
+        content=embed, channel=int(os.environ.get("ANNOCEMENT_CHANNEL"))
+    )
 
 
 def load(bot: lightbulb.BotApp) -> None:
