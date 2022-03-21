@@ -126,5 +126,24 @@ async def ban(ctx: lightbulb.Context) -> None:
         return
 
 
+@mod_plugin.command
+@lightbulb.add_checks(lightbulb.has_roles(774478728318681118, mode=any))
+@lightbulb.option("target", "the member to ban.", hikari.Member, required=True)
+@lightbulb.option("reason", "reason why user is banned", required=False)
+@lightbulb.command("kick", "kick the user from a server.")
+@lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
+async def kick(ctx: lightbulb.Context) -> None:
+    target: hikari.Member = ctx.option.target
+    reason: str = ctx.options.reason
+    try:
+        await target.kick(reason=reason)
+        await ctx.respond(f"user: {target.username} has been kicked")
+    except Exception as e:
+        await ctx.respond("an error occured while trying to kick the user")
+        print(e)
+    finally:
+        return
+
+
 def load(bot: lightbulb.BotApp) -> None:
     bot.add_plugin(mod_plugin)

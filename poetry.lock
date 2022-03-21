@@ -84,7 +84,6 @@ mypy-extensions = ">=0.4.3"
 pathspec = ">=0.9.0"
 platformdirs = ">=2"
 tomli = ">=1.1.0"
-typing-extensions = {version = ">=3.10.0.0", markers = "python_version < \"3.10\""}
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -676,8 +675,8 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.9,<3.11"
-content-hash = "4134c39ac28407a42fa065d9c490ba85b9ee6fdd8c87afd111a257ddf1382cb8"
+python-versions = ">=3.10,<3.11"
+content-hash = "f9e0fabd109a837c3a91f17ba5cc3633a9e2081e97451b91a8dabae249b86521"
 
 [metadata.files]
 aiodns = [

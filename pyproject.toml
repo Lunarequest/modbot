@@ -7,7 +7,7 @@ readme = "README.md"
 authors = ["Luna D Dragon <advaith.madhukar@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"
+python = ">=3.10,<3.11"
 rich = "^11.2.0"
 hikari = {extras = ["speedups"], version = "^2.0.0-alpha.106"}
 uvloop = "^0.16.0"
