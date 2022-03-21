@@ -124,7 +124,6 @@ async def kick(ctx: lightbulb.Context) -> None:
 @mod_plugin.listener(hikari.MemberCreateEvent)
 async def member_join(event):
     target = event.member
-    print(f"{target.display_name}")
     created_at: int = int(target.created_at.timestamp())
     joined_at: int = int(target.joined_at.timestamp())
     embed = (
