@@ -18,7 +18,8 @@ def build_bot() -> lightbulb.BotApp:
             default_enabled_guilds=(752062040075534397,),
         )
 
-        bot.load_extensions_from("./modbot/extensions/", must_exist=True)
+        os.chdir("modbot")
+        bot.load_extensions_from("./extensions", must_exist=True)
 
         return bot
     else:

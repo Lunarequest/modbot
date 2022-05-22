@@ -19,9 +19,7 @@ async def userinfo(ctx: lightbulb.Context) -> None:
     if guild:
         if ctx.options.target:
             if TYPE_CHECKING:
-                target: Optional[hikari.Member] = guild.get_member(
-                    ctx.options.target
-                )
+                target: Optional[hikari.Member] = guild.get_member(ctx.options.target)
             else:
                 target: Optional[hikari.Member] = guild.get_member(
                     ctx.user or ctx.options.target

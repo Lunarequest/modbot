@@ -19,4 +19,5 @@ if os.name != "nt":
     uvloop.install()
 
 if __name__ == "__main__":
-    build_bot().run()
+    bot = build_bot()
+    bot.run()
