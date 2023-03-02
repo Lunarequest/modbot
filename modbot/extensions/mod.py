@@ -1,29 +1,33 @@
 from datetime import datetime
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 import hikari
 import os
 import lightbulb
 
 mod_plugin = lightbulb.Plugin("mod")
+ANNOCEMENT_CHANNEL = os.environ.get("ANNOCEMENT_CHANNEL")
+if not ANNOCEMENT_CHANNEL:
+    print("MISSING REQUIRED ENV VAR ANNOCEMENT_CHANNEL")
+    exit(1)
+MODROLE = os.environ.get("MODROLE")
+if not MODROLE:
+    print("MISSING REQUIRED ENV VAR MODROLE")
+    exit(1)
 
 
 @mod_plugin.command
-@lightbulb.add_checks(lightbulb.has_roles(774478728318681118, mode=any))
+@lightbulb.add_checks(lightbulb.has_roles(int(MODROLE), mode=any))
 @lightbulb.option(
     "target", "the member to get user info about.", hikari.User, required=False
 )
 @lightbulb.command("userinfo", "get information on a server member.")
 @lightbulb.implements(lightbulb.PrefixCommand, lightbulb.SlashCommand)
 async def userinfo(ctx: lightbulb.Context) -> None:
+    target: Optional[hikari.Member] = None
     guild = ctx.get_guild()
     if guild:
         if ctx.options.target:
-            if TYPE_CHECKING:
-                target: Optional[hikari.Member] = guild.get_member(ctx.options.target)
-            else:
-                target: Optional[hikari.Member] = guild.get_member(
-                    ctx.user or ctx.options.target
-                )
+            target = guild.get_member(ctx.user or ctx.options.target)
 
     if not target:
         await ctx.respond("the requested user is not in the server")
@@ -148,9 +152,60 @@ async def member_join(event):
             inline=True,
         )
     )
+
     await mod_plugin.bot.rest.create_message(
-        content=embed, channel=int(os.environ.get("ANNOCEMENT_CHANNEL"))
+        content=embed, channel=int(ANNOCEMENT_CHANNEL)
     )
+
+
+@mod_plugin.command
+@lightbulb.add_cooldown(10, 3, lightbulb.UserBucket)
+@lightbulb.option(
+    name="reason",
+    description="the reasoning for channel lockdown",
+    required=False,
+)
+@lightbulb.option(
+    name="channel",
+    description="the channel to lock",
+    type=hikari.TextableGuildChannel,
+    required=False,
+)
+@lightbulb.command(
+    name="lock",
+    description="Locks a channel",
+    pass_options=True,
+)
+@lightbulb.implements(lightbulb.SlashCommand)
+async def lock(
+    ctx: lightbulb.Context, channel: hikari.TextableGuildChannel, reason: str
+) -> None:
+    """
+    Allows mentioning of a channel or to use the id of one
+    when using the channel option.
+    If `reason` is not specified, it will be set to None.
+    """
+    guild = ctx.get_guild()
+    guild_id = ctx.guild_id
+    if guild and guild_id:
+        _channel = guild.get_channel(channel.id if channel else ctx.channel_id)
+        if _channel:
+            await _channel.edit_overwrite(
+                guild_id,
+                target_type=hikari.PermissionOverwriteType.ROLE,
+                deny=hikari.Permissions.SEND_MESSAGES,
+                reason="Channel lockdown",
+            )
+
+            await ctx.respond(
+                f"⚠️ {_channel.mention} has been locked by **{ctx.user}**.\n"
+                f"**Reason**: {reason or 'None'}"
+            )
+        else:
+            await ctx.respond(
+                "❌ This channel has already been locked.",
+                flags=hikari.MessageFlag.EPHEMERAL,
+            )
 
 
 def load(bot: lightbulb.BotApp) -> None:

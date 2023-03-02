@@ -6,16 +6,14 @@ import os
 
 def build_bot() -> lightbulb.BotApp:
     TOKEN = os.environ.get("BOT_TOKEN")
-    if not os.environ.get("ANNOCEMENT_CHANNEL"):
-        print("missing required env token ANNOCEMENT_CHANNEL")
-        sys.exit(1)
-    if TOKEN:
+    GUILD = os.environ.get("GUILD")
+    if GUILD and TOKEN:
         bot = lightbulb.BotApp(
             TOKEN,
             prefix="!",
             banner=None,
             intents=hikari.Intents.ALL,
-            default_enabled_guilds=(752062040075534397,),
+            default_enabled_guilds=(int(GUILD)),
         )
 
         os.chdir("modbot")
