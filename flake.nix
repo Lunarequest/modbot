@@ -39,9 +39,10 @@
             overrides = pkgs.poetry2nix.overrides.withDefaults (final: prev: {
               # Notice that using .overridePythonAttrs or .overrideAttrs wont work!
               mypy = prev.mypy.override { preferWheel = true; };
+              orjson = prev.orjson.override { preferWheel = true; };
             });
             };
-            default = self.packages.${system}.myapp;
+            default = self.packages.${system}.modbot;
           };
 
           devShells.default = pkgs.mkShell {
@@ -49,7 +50,7 @@
               ModBotEnv
             ];
             packages = with pkgs;[
-              poetry2nix.packages.${system}.poetry
+              python311
               zsh
             ];
             shellHook = ''
