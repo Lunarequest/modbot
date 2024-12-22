@@ -1,0 +1,27 @@
+[project]
+authors = [{ name = "Luna D Dragon", email = "luna@nullrequest.com" }]
+name = "modbot"
+version = "0.1.0"
+description = ""
+license = "AGPL"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "hikari-lightbulb>=2.3.5.post1",
+  "hikari[speedups]>=2.1.0",
+  "python-dotenv>=1.0.1",
+  "rich>=13.9.4",
+  "uvloop>=0.21.0",
+]
+
+[dependency-groups]
+dev = [
+  "hikari-arc>=1.4.0",
+  "pre-commit>=4.0.1",
+  "pyright>=1.1.391",
+  "ruff>=0.8.4",
+  "types-pyyaml>=6.0.12.20241221",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "N", "UP", "PL", "TC", "YTT", "RUF", "FLY", "LOG", "ASYNC"]
