@@ -1,5 +1,5 @@
 from datetime import datetime
-from checks import moduser
+from modbot.checks import moduser
 from sys import exit
 import hikari
 import arc
