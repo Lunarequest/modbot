@@ -1,12 +1,12 @@
 regex:
-  - ~/f[^string]*?a[^string]*?g[^string]*?/g
-  - ~/f[^string]*?a[^string]*?g[^string]*?g[^string]*?o[^string]*?t/g
-  - ~/n[^string]*?i[^string]*?g[^string]*?g[^string]*?e[^string]*?r/g
-  - ~/n[^string]*?e[^string]*?g[^string]*?r[^string]*?o/g
-  - ~/d[^string]*?y[^string]*?k[^string]*?e/g
-  - ~/c[^string]*?h[^string]*?i[^string]*?n[^string]*?k/g
-  - ~/c[^string]*?o[^string]*?o[^string]*?n/g
-  - ~/t[^string]*?r[^string]*?a[^string]*?n[^string]*?n[^string]*?i[^string]*?e/g
-  - ~/t[^string]*?r[^string]*?a[^string]*?n[^string]*?n[^string]*?y/g
-  - ~/r[^string]*?e[^string]*?t[^string]*?a[^string]*?r[^string]*?d/g
-  - ~/s[^string]*?a[^string]*?n[^string]*?d[^string]*?m[^string]*?o[^string]*?n[^string]*?k[^string]*?e[^string]*?y/g
+  - "\\bfa[^a-zA-Z]*g\\b"
+  - "\\bfa[^a-zA-Z]*go[^a-zA-Z]*t\\b"
+  - "\\bni[^a-zA-Z]*gg[^a-zA-Z]*e[^a-zA-Z]*r\\b"
+  - "\\bne[^a-zA-Z]*g[^a-zA-Z]*ro\\b"
+  - "\\bdy[^a-zA-Z]*ke\\b"
+  - "\\bch[^a-zA-Z]*in[^a-zA-Z]*k\\b"
+  - "\\bco[^a-zA-Z]*o[^a-zA-Z]*n\\b"
+  - "\\btra[^a-zA-Z]*nn[^a-zA-Z]*ie\\b"
+  - "\\btra[^a-zA-Z]*nn[^a-zA-Z]*y\\b"
+  - "\\bret[^a-zA-Z]*ar[^a-zA-Z]*d\\b"
+  - "\\bsa[^a-zA-Z]*nd[^a-zA-Z]*mo[^a-zA-Z]*nk[^a-zA-Z]*ey\\b"

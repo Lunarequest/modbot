@@ -3,25 +3,38 @@ authors = [{ name = "Luna D Dragon", email = "luna@nullrequest.com" }]
 name = "modbot"
 version = "0.1.0"
 description = ""
-license = "AGPL"
+license = { text = "AGPL-3.0-or-later" }
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-  "hikari-lightbulb>=2.3.5.post1",
+  "hikari-arc>=1.4.0",
   "hikari[speedups]>=2.1.0",
+  "logging>=0.4.9.6",
   "python-dotenv>=1.0.1",
   "rich>=13.9.4",
   "uvloop>=0.21.0",
 ]
 
+[project.scripts]
+twitchfediannoucer = "modbot.__main__:run"
+
 [dependency-groups]
 dev = [
-  "hikari-arc>=1.4.0",
   "pre-commit>=4.0.1",
   "pyright>=1.1.391",
   "ruff>=0.8.4",
   "types-pyyaml>=6.0.12.20241221",
 ]
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+exclude = [".pre-commit-config.yaml", ".vscode"]
 
 [tool.ruff.lint]
 select = ["E", "F", "N", "UP", "PL", "TC", "YTT", "RUF", "FLY", "LOG", "ASYNC"]

@@ -1,5 +1,5 @@
 regex:
-  - ~/z[^string]*?o[^string]*?o[^string]*?p[^string]*?h[^string]*?i[^string]*?l[^string]*?e/g
-  - ~/y[^string]*?i[^string]*?f[^string]*?f[^string]*?i[^string]*?n[^string]*?h[^string]*?e[^string]*?l[^string]*?l/g
-  - ~/d[^string]*?o[^string]*?g[^string]*?f[^string]*?u[^string]*?c[^string]*?k[^string]*?e[^string]*?r/g
-  - ~/f[^string]*?u[^string]*?r[^string]*?f[^string]*?a[^string]*?g/g
+  - "\\bz[^a-zA-Z]*o[^a-zA-Z]*o[^a-zA-Z]*p[^a-zA-Z]*h[^a-zA-Z]*i[^a-zA-Z]*l[^a-zA-Z]*e\\b"
+  - "\\by[^a-zA-Z]*i[^a-zA-Z]*f[^a-zA-Z]*f[^a-zA-Z]*i[^a-zA-Z]*n[^a-zA-Z]*h[^a-zA-Z]*e[^a-zA-Z]*l[^a-zA-Z]*l\\b"
+  - "\\bd[^a-zA-Z]*o[^a-zA-Z]*g[^a-zA-Z]*f[^a-zA-Z]*u[^a-zA-Z]*c[^a-zA-Z]*k[^a-zA-Z]*e[^a-zA-Z]*r\\b"
+  - "\\bf[^a-zA-Z]*u[^a-zA-Z]*r[^a-zA-Z]*f[^a-zA-Z]*a[^a-zA-Z]*g\\b"

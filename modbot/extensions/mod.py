@@ -1,5 +1,5 @@
 from datetime import datetime
-from ..checks import moduser
+from checks import moduser
 from sys import exit
 import hikari
 import arc
@@ -17,11 +17,10 @@ if not ANNOCEMENT_CHANNEL:
 @arc.slash_command("userinfo", "get information on a server member.")
 async def userinfo(
     ctx: arc.GatewayContext,
-    user: arc.Option[
-        hikari.User, arc.MentionableParams("user to get infomration about")
-    ],
+    user: arc.Option[hikari.Member, arc.MemberParams("user to get infomration about")],
 ) -> None:
     guild = ctx.get_guild()
+    target = None
     if guild:
         target = guild.get_member(user)
 
@@ -78,7 +77,7 @@ async def userinfo(
 @arc.slash_command("ban", "ban user with reason")
 async def ban(
     ctx: arc.Context,
-    user: arc.Option[hikari.Member, arc.MentionableParams("User to ban")],
+    user: arc.Option[hikari.Member, arc.MemberParams("User to ban")],
     reason: arc.Option[
         str, arc.StrParams("Reason why user is banned")
     ] = "User was banned",
@@ -98,7 +97,7 @@ async def ban(
 @arc.slash_command("kick", "kick the user from a server.")
 async def kick(
     ctx: arc.Context,
-    target: arc.Option[hikari.Member, arc.MentionableParams("User was kicked")],
+    target: arc.Option[hikari.Member, arc.MemberParams("User was kicked")],
     reason: arc.Option[
         str, arc.StrParams("Reason why user is banned")
     ] = "User was banned",
@@ -187,5 +186,28 @@ async def lock(
             )
 
 
-def load(client: arc.GatewayClient) -> None:
+@mod_plugin.include
+@arc.slash_command("unlock", "locks down channel")
+async def unlock(
+    ctx: arc.Context,
+    channel: arc.Option[
+        hikari.TextableGuildChannel, arc.ChannelParams("the channel to unlock")
+    ],
+) -> None:
+    guild = ctx.get_guild()
+    guild_id = ctx.guild_id
+    if guild and guild_id:
+        _channel = guild.get_channel(channel.id if channel else ctx.channel_id)
+        if _channel:
+            await _channel.remove_overwrite(_channel.permission_overwrites[_channel.id])
+
+        else:
+            await ctx.respond(
+                "❌ This channel has already been locked.",
+                flags=hikari.MessageFlag.EPHEMERAL,
+            )
+
+
+@arc.loader
+def loader(client: arc.GatewayClient) -> None:
     client.add_plugin(mod_plugin)

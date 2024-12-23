@@ -3,11 +3,13 @@ import sys
 import arc
 import os
 
+import hikari.intents
+
 
 def build_bot() -> hikari.GatewayBot:
     token = os.environ.get("BOT_TOKEN")
     if token:
-        bot = hikari.GatewayBot(token)
+        bot = hikari.GatewayBot(token, intents=hikari.intents.Intents.ALL)
         client = arc.GatewayClient(bot)
 
         os.chdir("modbot")
