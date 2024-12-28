@@ -13,7 +13,7 @@ slur_list = []
 
 
 class Slurs:
-    slur_list: list[re.Pattern[Any]] = []  # noqa: RUF012
+    slur_list: list[re.Pattern[Any]] = []  # noqa: RUF012 classvar causes more issues
 
     def load_slurs(self):
         pathlist = Path("../slurs").glob("**/*.yaml")
